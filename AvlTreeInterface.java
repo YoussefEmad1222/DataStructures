@@ -1,4 +1,4 @@
-package org.DSLab2;
+
 
 interface AvlTree {
     public int size();
