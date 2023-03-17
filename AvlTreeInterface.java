@@ -1,5 +1,7 @@
+package org.DSLab2;
+
 interface AvlTree {
-    public int Getsize();
+    public int size();
 
     public boolean isEmpty();
 
@@ -42,5 +44,5 @@ interface AvlTree {
     public void postorder();
 
     public void postorder(Node node);
-    
+
 }
