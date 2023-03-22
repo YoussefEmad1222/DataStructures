@@ -1,5 +1,3 @@
-import javax.print.event.PrintEvent;
-
 class Node {// the node class which contains the data and the left and right node
     int data = 0;
     int balanceFactor = 0;
@@ -36,6 +34,9 @@ public class AVL_Tree implements AvlTree {// the AVL_Tree class which implements
     }
 
     private int balanceFactor(Node node) {// the method to get the balance factor of a node
+        if (node == null) {
+            return 0;
+        }
         return height(node.left) - height(node.right);
     }
 
@@ -62,21 +63,21 @@ public class AVL_Tree implements AvlTree {// the AVL_Tree class which implements
         A.left = C;
         A.height = Math.max(height(A.left), height(A.right)) + 1;
         B.height = Math.max(height(B.left), height(B.right)) + 1;
-        B.balanceFactor = balanceFactor(B);
         A.balanceFactor = balanceFactor(A);
+        B.balanceFactor = balanceFactor(B);
+
         return B;
     }
 
     private Node rotateLeft(Node A) {// the method to rotate the tree to the left
-
         Node B = A.right;
         Node C = B.left;
         B.left = A;
         A.right = C;
         A.height = Math.max(height(A.left), height(A.right)) + 1;
         B.height = Math.max(height(B.left), height(B.right)) + 1;
-        B.balanceFactor = balanceFactor(B);
         A.balanceFactor = balanceFactor(A);
+        B.balanceFactor = balanceFactor(B);
         return B;
     }
 
@@ -136,15 +137,16 @@ public class AVL_Tree implements AvlTree {// the AVL_Tree class which implements
     public void insert(int data) {// the method that the user call to insert a node in the tree
         if (searchNode(root, data)) {
             System.out.println("the node is already exist");
+            return;
         }
         size++;
         this.root = insert(this.root, data);
+        return;
     }
 
     private Node insert(Node node, int data) {// the method to insert a node in the tree
-        if (node == null) {// if we reach beyond the leaf node then create a new node
-            node = new Node(data);
-            return node;
+        if (node == null) {// if we reach beyond the leaf node then create a new nod
+            return new Node(data);
         } else if (data < node.data) {// if the data is less than the node data then go to the left
             node.left = insert(node.left, data);
         } else {
@@ -152,24 +154,17 @@ public class AVL_Tree implements AvlTree {// the AVL_Tree class which implements
         }
         node.height = Math.max(height(node.left), height(node.right)) + 1;// update the height of the node
         node.balanceFactor = balanceFactor(node);// update the balance factor of the node
-        if (node.balanceFactor > 1) {// if the balance factor is greater than 1 then we need to rotate the tree
-            if (balanceFactor(node.left) >= 0) {// if the balance factor of the left child is greater than or equal to 0
-                                                // then we need to rotate the tree to the right
-                node = rotateRight(node);
-            } else {// if the balance factor of the left child is less than 0 then we need to rotate
-                    // the tree to the left then rotate the tree to the right
-                node.left = rotateLeft(node.left);
-                node = rotateRight(node);
-            }
-        } else if (node.balanceFactor < -1) {// if the balance factor is less than -1 then we need to rotate the tree
-            if (balanceFactor(node.right) <= 0) {// if the balance factor of the right child is less than or equal to 0
-                                                 // then we need to rotate the tree to the left
-                node = rotateLeft(node);// rotate the tree to the left
-            } else {// if the balance factor of the right child is greater than 0 then we need to
-                    // rotate the tree to the right then rotate the tree to the left
-                node.right = rotateRight(node.right);
-                node = rotateLeft(node);
-            }
+        int balance = balanceFactor(node);
+        if (balance > 1 && balanceFactor(node.left) >= 0) {
+            node = rotateRight(node);
+        } else if (balance > 1 && balanceFactor(node.left) < 0) {
+            node.left = rotateLeft(node.left);
+            node = rotateRight(node);
+        } else if (balance < -1 && balanceFactor(node.right) <= 0) {
+            node = rotateLeft(node);
+        } else if (balance < -1 && balanceFactor(node.right) > 0) {
+            node.right = rotateRight(node.right);
+            node = rotateLeft(node);
         }
         return node;
     }
@@ -204,23 +199,21 @@ public class AVL_Tree implements AvlTree {// the AVL_Tree class which implements
                 node.data = temp.data;// replace the node data with the minimum node data
                 node.left = delete(node.left, temp.data);// delete the minimum node
             }
-            if (node == null) {
-                return null;
-            }
-            node.height = Math.max(height(node.left), height(node.right)) + 1;// update the height of the node
-            node.balanceFactor = balanceFactor(node);// update the balance factor of the node
-            int balance = balanceFactor(node);// get the balance factor of the node
-            if (balance > 1 && balanceFactor(node.left) >= 0) {
-                node = rotateRight(node);
-            } else if (balance > 1 && balanceFactor(node.left) < 0) {
-                node.left = rotateLeft(node.left);
-                node = rotateRight(node);
-            } else if (balance < -1 && balanceFactor(node.right) <= 0) {
-                node = rotateLeft(node);
-            } else if (balance < -1 && balanceFactor(node.right) > 0) {
-                node.right = rotateRight(node.right);
-                node = rotateLeft(node);
-            }
+
+        }
+        node.height = Math.max(height(node.left), height(node.right)) + 1;
+        node.balanceFactor = balanceFactor(node);
+        int balance = balanceFactor(node);
+        if (balance > 1 && balanceFactor(node.left) >= 0) {
+            node = rotateRight(node);
+        } else if (balance > 1 && balanceFactor(node.left) < 0) {
+            node.left = rotateLeft(node.left);
+            node = rotateRight(node);
+        } else if (balance < -1 && balanceFactor(node.right) <= 0) {
+            node = rotateLeft(node);
+        } else if (balance < -1 && balanceFactor(node.right) > 0) {
+            node.right = rotateRight(node.right);
+            node = rotateLeft(node);
         }
         return node;
     }
@@ -235,7 +228,8 @@ public class AVL_Tree implements AvlTree {// the AVL_Tree class which implements
             return;
         }
         inorder(node.left);
-        System.out.print(node.data + " ");
+        System.out.print("(" + (node.left == null ? "." : node.left.data) + ", " + node.data + ", "
+                + (node.right == null ? "." : node.right.data) + ")");
         inorder(node.right);
     }
 
@@ -269,25 +263,5 @@ public class AVL_Tree implements AvlTree {// the AVL_Tree class which implements
 
     public static void main(String[] args) {
         AVL_Tree tree = new AVL_Tree();
-        int[] toBeInserted = { 20, 4, 26, 3, 9, 30, 21, 2, 7, 11 };
-        for (int i = 0; i < toBeInserted.length; i++) {
-            tree.insert(toBeInserted[i]);
-        }
-        int[] nums = { 15, 8, 20, 9, 11, 1, 0 };
-        boolean[] operation = { true, true, false, false, false, true, true };// true:insert
-        for (int i = 0; i < nums.length; i++) {
-            if (operation[i]) {
-                tree.insert(nums[i]);
-            } else {
-                if (nums[i] == 11) {
-
-                    tree.delete(nums[i]);
-                    tree.preorder();
-                } else {
-                    tree.delete(nums[i]);
-                }
-
-            }
-        }
     }
 }
