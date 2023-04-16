@@ -1,7 +1,6 @@
 package Algorithms;
-
 import java.util.*;
-
+//edge class to store the source and the destination of the edge and the value of the edge
 class edge {
     int source;
     int destination;
@@ -13,11 +12,10 @@ class edge {
         this.value = value;
     }
 }
-
+//node class to store the index and the value of the node in the priority queue
 class node {
     int index;
     double value;
-
     node(int index, double value) {
         this.index = index;
         this.value = value;
@@ -63,8 +61,9 @@ public class Dijkistra {
         this.visited = new boolean[V];// create a visited array
         this.pq = new PriorityQueue<>(new Comparator<node>() {
             @Override
-            public int compare(node o1, node o2) {// comparator to compare two nodes by their values in the priority
-                                                  // queue not by their indexes
+            // comparator to compare two nodes by their values in the priority
+            // queue not by their indexes
+            public int compare(node o1, node o2) {
                 if (Math.abs(o1.value - o2.value) < EPS) {
                     return 0;
                 }
