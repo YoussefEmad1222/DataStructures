@@ -1,4 +1,5 @@
 package Algorithms;
+
 class edge {
     int source;
     int destination;
@@ -22,5 +23,5 @@ class node {
 }
 
 public class bellmanFord {
-    
+
 }
