@@ -1,4 +1,4 @@
-package dataStructures;
+
 interface AvlTree {
     public int size();
 

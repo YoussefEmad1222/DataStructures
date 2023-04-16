@@ -1,4 +1,4 @@
-package dataStructures;
+
 class Node {// the node class which contains the data and the left and right node
     int data = 0;
     int balanceFactor = 0;

@@ -1,4 +1,3 @@
-package dataStructures;
 
 class Node {
     int data;
