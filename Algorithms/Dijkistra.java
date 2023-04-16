@@ -1,7 +1,6 @@
-
+package Algorithms;
 import java.util.*;
 
-import javax.print.event.PrintEvent;
 
 class edge {
     int source;
@@ -26,6 +25,7 @@ class node {
 }
 
 public class Dijkistra {
+    int size;
     int[] parent;
     double[] distance;
     boolean[] visited;
@@ -43,6 +43,7 @@ public class Dijkistra {
         for (int i = 0; i < V; i++) {
             this.adjecencyList.add(new ArrayList<>());
         }
+        this.size = V;
     }
 
     void addEdge(int source, int destination, double value) {
@@ -110,6 +111,14 @@ public class Dijkistra {
             }
             System.out.println();
         }
+    }
+
+    void constructPath(int destination) {
+        if (destination == -1) {
+            return;
+        }
+        constructPath(parent[destination]);
+        System.out.print(destination + " ");
     }
 
     public static void main(String[] args) {
