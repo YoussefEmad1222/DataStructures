@@ -1,4 +1,4 @@
-package Algorithms;
+
 import java.util.*;
 //edge class to store the source and the destination of the edge and the value of the edge
 class edge {
@@ -143,26 +143,26 @@ public class Dijkistra {
     }
 
     public static void main(String[] args) {
-        Dijkistra graph = new Dijkistra(8, 15);
-        graph.addEdge(0, 1, 4);
-        graph.addEdge(0, 7, 8);
-        graph.addEdge(1, 2, 8);
-        graph.addEdge(1, 7, 11);
-        graph.addEdge(2, 3, 7);
-        graph.addEdge(2, 5, 4);
-        graph.addEdge(3, 4, 9);
-        graph.addEdge(3, 5, 14);
-        graph.addEdge(4, 5, 10);
-        graph.addEdge(5, 6, 2);
-        graph.addEdge(6, 7, 1);
-        graph.addEdge(6, 7, 6);
-        graph.addEdge(7, 1, 8);
-        graph.addEdge(7, 2, 11);
-        graph.addEdge(7, 6, 7);
-        graph.dik(0);
-        graph.printGraph();
-        for (int i = 0; i < graph.distance.length; i++) {
-            System.out.println("Distance from 0 to " + i + " is " + graph.distance[i]);
+        PriorityQueue<int[]> pq = new PriorityQueue<>(new Comparator<int[]>() {
+            @Override
+            public int compare(int[] o1, int[] o2) {
+                if (Math.abs(o1[2] - o2[2]) < 1e-9) {
+                    return 0;
+                }
+                return o1[2] > o2[2] ? -1 : 1;
+            }   
+        });
+        pq.add(new int[] { 1, 2, 3 });
+        pq.add(new int[] { 1, 2, 1 });
+        pq.add(new int[] { 1, 2, 2 });
+        pq.add(new int[] { 1, 2, 4 });
+        pq.add(new int[] { 1, 2, 5 });
+        pq.add(new int[] { 1, 2, 6 });
+        pq.add(new int[] { 1, 2, 7 });
+        pq.add(new int[] { 14, 22, 8 });
+        pq.add(new int[] { 1, 2, 9 });
+        for (int[] i : pq) {
+            System.out.println(i[2]);
         }
     }
 }
