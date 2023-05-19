@@ -69,7 +69,7 @@ public class BinaryTree {
         return search(node.right, data);// if the data is greater than the node data then search the right
     }
 
-    public int FidnMin() {// find the minimum value in the tree
+    public int FindMin() {// find the minimum value in the tree
         if (this.root == null) {// if the root is null then return -1
             return -1;
         }
@@ -191,7 +191,7 @@ public class BinaryTree {
 
     public static void main(String[] args) {
         BinaryTree BST = new BinaryTree();// create a new binary tree
-        // this insert and delete methods working poperly
+        // this insert and delete methods working properly
         // so this is a test for some methods
         // i test the delete and it works fine
         // have a good day
@@ -204,7 +204,7 @@ public class BinaryTree {
         BST.insertNode(18);
         System.out.println();
         System.out.println(BST.height());
-        System.out.println(BST.FidnMin());
+        System.out.println(BST.FindMin());
         System.out.println(BST.FindMax());
         System.out.println(BST.searchNode(10));
         System.out.println(BST.searchNode(5));

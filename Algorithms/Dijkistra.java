@@ -54,7 +54,7 @@ public class Dijkistra {
         this.adjecencyList.get(source).add(new edge(source, destination, value));// add the edge to the adjecency list
     }
 
-    Dijkistra(int V, int E) {// constructor of the dijkistra class
+    Dijkistra(int V, int E) {// constructor of the dijkstra class
         this.createGraph(V, E);// create a graph with V vertices and E edges
         this.parent = new int[V];// create a parent array
         this.distance = new double[V];// create a distance array

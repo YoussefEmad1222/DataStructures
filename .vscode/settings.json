@@ -2,5 +2,12 @@
     "files.watcherExclude": {
         "**/target": true
     },
-    "java.debug.settings.onBuildFailureProceed": true
+    "java.debug.settings.onBuildFailureProceed": true,
+    "cSpell.words": [
+        "adjecency",
+        "bellmanford",
+        "Dijkistra",
+        "heapify",
+        "heapifying"
+    ]
 }
