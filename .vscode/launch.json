@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "MinHeap",
+            "request": "launch",
+            "mainClass": "MinHeap",
+            "projectName": "DataStructures_1fd99084"
+        },
+        {
+            "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}"
