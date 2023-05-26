@@ -1,5 +1,6 @@
 
 import java.util.*;
+
 //edge class to store the source and the destination of the edge and the value of the edge
 class edge {
     int source;
@@ -12,10 +13,12 @@ class edge {
         this.value = value;
     }
 }
-//node class to store the index and the value of the node in the priority queue
+
+// node class to store the index and the value of the node in the priority queue
 class node {
     int index;
     double value;
+
     node(int index, double value) {
         this.index = index;
         this.value = value;
@@ -87,32 +90,33 @@ public class Dijkistra {
         // add the source to the priority queue
         this.pq.add(new node(source, 0));
         while (!pq.isEmpty()) {
-            node n = pq.poll();// get the node with the minimum value
-            if (visited[n.index] == true) {// if the node is visited before
+            node node = pq.poll();// get the node with the minimum value
+            if (visited[node.index] == true) {// if the node is visited before
                 continue;
             }
-            visited[n.index] = true;// mark the node as visited
+            visited[node.index] = true;// mark the node as visited
             // if the value of the node is greater than the distance of the node from the
             // source then do nothing
             // because the node is already visited and the distance of the node from the
             // source is the minimum
-            if (n.value > distance[n.index]) {
+            if (node.value > distance[node.index]) {
                 continue;
             }
             // get the edges of the node
-            List<edge> edges = this.adjecencyList.get(n.index);
+            List<edge> edges = this.adjecencyList.get(node.index);
             for (int i = 0; i < edges.size(); i++) {
-                edge e = edges.get(i);// get the edge
-                if (visited[e.destination])// if the destination of the edge is visited before
+                edge edge = edges.get(i);// get the edge
+                if (visited[edge.destination])// if the destination of the edge is visited before
                     continue;
                 // if the distance of the destination of the edge from the source is greater
                 // than the distance of the source of the edge from the source plus the value of
                 // the edge
-                if (distance[e.destination] > distance[e.source] + e.value) {
-                    distance[e.destination] = distance[e.source] + e.value;
-                    parent[e.destination] = e.source;// update the parent of the destination of the edge
+                double newDist = distance[edge.source] + edge.value;
+                if (distance[edge.destination] > newDist) {
+                    distance[edge.destination] = newDist;// update the distance of the destination of the edge
+                    parent[edge.destination] = edge.source;// update the parent of the destination of the edge
                     // add the neighbor of the node to the priority queue
-                    pq.add(new node(e.destination, distance[e.destination]));
+                    pq.add(new node(edge.destination, distance[edge.destination]));
                 }
             }
         }
@@ -150,7 +154,7 @@ public class Dijkistra {
                     return 0;
                 }
                 return o1[2] > o2[2] ? -1 : 1;
-            }   
+            }
         });
         pq.add(new int[] { 1, 2, 3 });
         pq.add(new int[] { 1, 2, 1 });
